@@ -107,9 +107,9 @@ class Poincare_Embeddings(object):
         u, v, norm_u, u_scalar_v, norm_v, alpha, beta, gamma = metrics
         if gamma == 1:
             return None, None
-        constant = left_partial * 4. / (((gamma ** 2 - 1) ** 0.5) * alpha * beta)
-        constant_u = constant * alpha ** 2 / 4.
-        constant_v = constant * beta ** 2 / 4.
+        constant = left_partial * 1. / (((gamma ** 2 - 1) ** 0.5) * alpha * beta)
+        constant_u = constant * alpha ** 2
+        constant_v = constant * beta ** 2
         gradient_u = constant_u * (u * (1 + norm_v - 2 * u_scalar_v) / alpha - v)
         gradient_v = constant_v * (v * (1 + norm_u - 2 * u_scalar_v) / beta - u)
 

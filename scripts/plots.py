@@ -17,7 +17,7 @@ def plot_embeddings(pdata, pdict, pembs, name, nb_epoch):
     ax.add_artist(plt.Circle((0, 0), 1., color='#1c9099', fill=False))
     for w,i in pdict.items():
         c0, c1 = pembs[i]
-        ax.plot(c0,c1,'o', color='#8A0808')
+        ax.plot(c0, c1, 'o', color='#8A0808')
         ax.text(c0+.01, c1+.01, w, color='#08088A')
     for links in pdata:
         (point_1_x, point_1_y) = pembs[pdict[links[0]]]
