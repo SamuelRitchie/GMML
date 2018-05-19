@@ -1,4 +1,4 @@
-music_genre
+music_genre.n.01
 black_music.n.01
 blues.n.01
 boogie.n.01

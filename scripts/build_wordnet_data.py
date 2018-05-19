@@ -1,12 +1,14 @@
 from collections import defaultdict
 from nltk.corpus import wordnet as wn
+import pandas as pd
 import logging
 logger = logging.getLogger(__name__)
 
 
 def get_word_dependencies(word):
+    print("fetching word '%s' dependencies in WordNet..." % word)
     logger.info("fetching word '%s' dependencies in WordNet..." % word)
-    list_music = [word]
+    list_music = ['%s.n.01' % word]
     for a in wn.synset('%s.n.01' % word).hyponyms():
         list_music.append(a.name())
         temp = a.name()
@@ -20,6 +22,7 @@ def get_word_dependencies(word):
 
 
 def generate_network(word, network=defaultdict(set)):
+    print("building network for word '%s' subtree..." % word)
     logger.info("building network for word '%s' subtree..." % word)
     words, target = wn.words(), wn.synset('%s.n.01' % word)
     targets = set(open('data/%s_dependencies.txt' % word).read().split('\n'))
@@ -32,7 +35,10 @@ def generate_network(word, network=defaultdict(set)):
                 if not path[i].name() in targets:
                     continue
                 network[noun.name()].add(path[i].name())
-    with open('data/%s_network.tsv' % word, 'w') as out:
+    with open('data/%s_network.csv' % word, 'w') as out:
+        nb_vertex = len(network)
         for key, vals in network.items():
             for val in vals:
-                out.write(key.split('.')[0]+'\t'+val.split('.')[0]+'\n')
+                out.write(key.split('.')[0]+','+val.split('.')[0]+'\n')
+    nb_links = len(pd.read_csv('data/%s_network.csv' % word))
+    print('Builded network of %s vertexes and %s links for word %s' % (nb_vertex, nb_links, word))
